@@ -21,17 +21,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ArrayListProductDaoTest
 {
-    @InjectMocks
     private ArrayListProductDao productDao;
-
-    @Mock
-    private Product product;
-
-    @Mock
-    private List<Product> products;
 
     @Before
     public void setup()
@@ -40,8 +32,11 @@ public class ArrayListProductDaoTest
     }
 
     @Test
-    public void testFindProducts() {
+    public void testFindProductsIsNotEmpty() {
         assertThat(productDao.findProducts().isEmpty(), is(false));
     }
+
+    @Test
+    public void testFindProducts() { assertThat(productDao.findProducts().size(), is(12)); }
 
 }

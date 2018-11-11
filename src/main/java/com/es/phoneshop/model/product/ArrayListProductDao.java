@@ -33,16 +33,14 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     @Override
-    public List<Product> findProducts() {
+    public synchronized List<Product> findProducts() {
         return products.stream().filter(x -> x.getPrice() != null)
                 .filter(x -> x.getStock() > 0).collect(Collectors.toList());
     }
 
     @Override
-    public void save(Product product) {
-        if (product.getStock() > 0 && product.getPrice() != null) {
-            products.add(product);
-        }
+    public void save(Product product)  {
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
