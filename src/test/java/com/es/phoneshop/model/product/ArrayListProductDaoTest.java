@@ -21,13 +21,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
-public class ArrayListProductDaoTest
-{
+public class ArrayListProductDaoTest {
     private ArrayListProductDao productDao;
 
     @Before
-    public void setup()
-    {
+    public void setup() {
         productDao = new ArrayListProductDao();
     }
 
@@ -37,6 +35,9 @@ public class ArrayListProductDaoTest
     }
 
     @Test
-    public void testFindProducts() { assertThat(productDao.findProducts().size(), is(12)); }
-
+    public void testFindProducts() {
+        assertThat(productDao.findProducts().size(), is(12));
+    }
 }
+
+
