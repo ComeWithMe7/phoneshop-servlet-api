@@ -38,6 +38,35 @@ public class ArrayListProductDaoTest {
     public void testFindProducts() {
         assertThat(productDao.findProducts().size(), is(12));
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetProductWithInvalidID() {
+        productDao.getProduct((long) 100);
+    }
+
+    @Test
+    public void testGetProductWithValidID() {
+        assertThat(productDao.getProduct((long) 5).equals(productDao.getProduct((long) 5)), is(true));
+    }
+
+    @Test
+    public void testSaveProduct() {
+        int sizeBeforeSaving = productDao.findProducts().size();
+        productDao.save(new Product(10L, "palmp", "Palm Pixi", new BigDecimal(170), Currency.getInstance("USD"), 30, "https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Palm/Palm%20Pixi.jpg"));
+        assertThat(productDao.findProducts().size(), is(sizeBeforeSaving + 1));
+    }
+
+    @Test
+    public void testDeliteWithValidID() {
+        int sizeBeforeDelition = productDao.findProducts().size();
+        productDao.delete((long) 5);
+        assertThat(productDao.findProducts().size(), is(sizeBeforeDelition - 1));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testDeliteWithInvalidID() {
+        productDao.delete((long) 100);
+    }
 }
 
 

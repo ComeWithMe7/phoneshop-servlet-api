@@ -29,7 +29,12 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public Product getProduct(Long id) {
-        throw new RuntimeException("Not implemented");
+        for (Product product : products) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+        throw new RuntimeException("Wrong ID");
     }
 
     @Override
@@ -40,11 +45,20 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public void save(Product product)  {
-        throw new RuntimeException("Not implemented");
+        products.add(product);
     }
 
     @Override
     public void delete(Long id) {
-        throw new RuntimeException("Not implemented");
+        boolean correctID = false;
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId().equals(id)) {
+                products.remove(i);
+                correctID = true;
+            }
+        }
+        if (!correctID) {
+            throw new RuntimeException("Wrong");
+        }
     }
 }
