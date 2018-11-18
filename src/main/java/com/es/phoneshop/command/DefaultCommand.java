@@ -9,7 +9,7 @@ import java.util.List;
 public class DefaultCommand implements Command {
     @Override
     public String execute(HttpServletRequest httpServletRequest) {
-        List<Product> products = ProductLogic.findProducts();
+        List<Product> products = ProductLogic.findProducts(httpServletRequest);
         httpServletRequest.setAttribute("products", products);
         return "/WEB-INF/pages/productList.jsp";
     }

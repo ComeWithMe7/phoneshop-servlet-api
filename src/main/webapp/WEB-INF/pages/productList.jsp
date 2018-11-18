@@ -20,12 +20,16 @@
       <p>
         Welcome to Expert-Soft training!
       </p>
+      <form method="get">
+        <p><input type="search" name="searchLine" placeholder="Site search" value="${searchLineAttrib}">
+          <input type="submit" value="Search"></p>
+      </form>
       <table>
         <thead>
           <tr>
             <td>Image</td>
-            <td>Description</td>
-            <td class="price">Price</td>
+            <td>Description <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=upDescription" %>">up</a> <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=downDescription" %>">down</a></td>
+            <td class="price">Price <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=upPrice" %>">up</a> <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=downPrice" %>">down</a> </td>
           </tr>
         </thead>
         <c:forEach var="product" items="${products}">
@@ -33,7 +37,7 @@
             <td>
               <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${product.imageUrl}">
             </td>
-            <td>${product.description}</td>
+            <td><a href="<%=request.getContextPath() + "/products/" %>${product.id}">${product.description}</a></td>
             <td class="price">
               <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
             </td>
