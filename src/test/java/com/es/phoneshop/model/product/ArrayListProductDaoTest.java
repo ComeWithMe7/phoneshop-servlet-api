@@ -4,13 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Currency;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 
 public class ArrayListProductDaoTest {
     private ArrayListProductDao productDao;
@@ -32,12 +29,12 @@ public class ArrayListProductDaoTest {
 
     @Test(expected = RuntimeException.class)
     public void testGetProductWithInvalidID() {
-        productDao.getProduct((long) 100);
+        productDao.getProduct(100L);
     }
 
     @Test
     public void testGetProductWithValidID() {
-        assertThat(productDao.getProduct((long) 5).equals(productDao.getProduct((long) 5)), is(true));
+        assertThat(productDao.getProduct(5L).equals(productDao.getProduct(5L)), is(true));
     }
 
     @Test
@@ -50,13 +47,13 @@ public class ArrayListProductDaoTest {
     @Test
     public void testDeliteWithValidID() {
         int sizeBeforeDelition = productDao.findProducts().size();
-        productDao.delete((long) 5);
+        productDao.delete(5L);
         assertThat(productDao.findProducts().size(), is(sizeBeforeDelition - 1));
     }
 
     @Test(expected = RuntimeException.class)
     public void testDeliteWithInvalidID() {
-        productDao.delete((long) 100);
+        productDao.delete(100L);
     }
 }
 

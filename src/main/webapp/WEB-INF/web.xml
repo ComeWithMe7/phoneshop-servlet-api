@@ -33,5 +33,11 @@
   <listener>
     <listener-class>ProductDemodataServletContextListener</listener-class>
   </listener>
+  
+  <context-param>
+    <param-name>listenerParam</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
 
 </web-app>

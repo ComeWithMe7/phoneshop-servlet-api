@@ -10,12 +10,7 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
   </head>
   <body class="product-list">
-    <header>
-      <a href="${pageContext.servletContext.contextPath}">
-        <img src="${pageContext.servletContext.contextPath}/images/logo.svg"/>
-        PhoneShop
-      </a>
-    </header>
+    <jsp:include page="header.jsp"/>
     <main>
       <p>
         Welcome to Expert-Soft training!
@@ -28,8 +23,8 @@
         <thead>
           <tr>
             <td>Image</td>
-            <td>Description <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=upDescription" %>">up</a> <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=downDescription" %>">down</a></td>
-            <td class="price">Price <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=upPrice" %>">up</a> <a href="<%=request.getContextPath() + "/products?searchLine=" + request.getAttribute("searchLineAttrib") + "&sortingParameter=downPrice" %>">down</a> </td>
+            <td>Description <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=upDescription"/>">up</a> <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=downDescription"/>">down</a></td>
+            <td class="price">Price <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=upPrice"/>">up</a> <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=downPrice"/>">down</a> </td>
           </tr>
         </thead>
         <c:forEach var="product" items="${products}">
@@ -37,7 +32,7 @@
             <td>
               <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${product.imageUrl}">
             </td>
-            <td><a href="<%=request.getContextPath() + "/products/" %>${product.id}">${product.description}</a></td>
+            <td><a href="<c:url value="/products/${product.id}"/>">${product.description}</a></td>
             <td class="price">
               <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
             </td>
