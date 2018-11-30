@@ -31,11 +31,11 @@
   </error-page>
 
   <listener>
-    <listener-class>ProductDemodataServletContextListener</listener-class>
+    <listener-class>com.es.phoneshop.web.ProductDemodataServletContextListener</listener-class>
   </listener>
   
   <context-param>
-    <param-name>listenerParam</param-name>
+    <param-name>initProductDAO</param-name>
     <param-value>true</param-value>
   </context-param>
 

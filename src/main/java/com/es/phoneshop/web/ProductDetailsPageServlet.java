@@ -16,17 +16,18 @@ public class ProductDetailsPageServlet extends HttpServlet {
     private ProductDao productDao;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         productDao = ArrayListProductDao.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String uri = req.getRequestURI();
         String productCode = uri.substring(uri.lastIndexOf("/") + 1);
         Product product = productDao.getProduct(Long.parseLong(productCode));
         req.setAttribute("product", product);
         req.getRequestDispatcher("/WEB-INF/pages/productDetails.jsp").forward(req, resp);
     }
+
+
 }

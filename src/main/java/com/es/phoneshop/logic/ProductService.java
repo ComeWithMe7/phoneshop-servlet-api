@@ -1,42 +1,43 @@
 package com.es.phoneshop.logic;
 
+import com.es.phoneshop.constants.ApplicationConstants;
 import com.es.phoneshop.model.product.ArrayListProductDao;
 import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.model.product.ProductDao;
-import com.es.phoneshop.model.product.RequestEnums;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProductLogic {
-    private ProductDao productDao;
-    private static volatile ProductLogic productLogicInstance;
+import static com.es.phoneshop.logic.SortOption.*;
 
-    public static ProductLogic getInstance() {
-        if (productLogicInstance == null) {
-            synchronized (ProductLogic.class) {
-                if (productLogicInstance == null) {
-                    productLogicInstance = new ProductLogic();
+public class ProductService {
+    private final ProductDao productDao;
+    private static volatile ProductService productServiceInstance;
+
+    public static ProductService getInstance() {
+        if (productServiceInstance == null) {
+            synchronized (ProductService.class) {
+                if (productServiceInstance == null) {
+                    productServiceInstance = new ProductService();
                 }
             }
         }
-        return productLogicInstance;
+        return productServiceInstance;
     }
 
-    private ProductLogic() {
+    private ProductService() {
         productDao = ArrayListProductDao.getInstance();
     }
 
     public List<Product> findProducts(HttpServletRequest request){
         List<Product> productList = productDao.findProducts();
-        String searchLine = request.getParameter(RequestEnums.SEARCH_LINE.getValue());
+        String searchLine = request.getParameter(ApplicationConstants.SEARCH_LINE);
         if (searchLine != null && !searchLine.isEmpty()) {
-            request.setAttribute(RequestEnums.SEARCH_LINE_ATTRIBUTE.getValue(), searchLine);
+            request.setAttribute(ApplicationConstants.SEARCH_LINE_ATTRIBUTE, searchLine);
             productList = searchLine(searchLine, productList);
         }
-        String sortingParameter = request.getParameter(RequestEnums.SORTING_PARAMETER.getValue());
+        String sortingParameter = request.getParameter(ApplicationConstants.SORTING_PARAMETER);
         return sortingByParam(sortingParameter, productList);
     }
 
@@ -68,15 +69,19 @@ public class ProductLogic {
 
     private List<Product> sortingByParam(String sortingParameter, List<Product> productList) {
         if (sortingParameter != null) {
-            switch (RequestEnums.getEnum(sortingParameter)) {
-                case UP_DESCRIPTION:
-                    return productList.stream().sorted(Comparator.comparing(Product::getDescription)).collect(Collectors.toList());
-                case DOWN_DESCRIPTION:
-                    return productList.stream().sorted(Comparator.comparing(Product::getDescription).reversed()).collect(Collectors.toList());
-                case UP_PRICE:
-                    return productList.stream().sorted(Comparator.comparing(Product::getPrice)).collect(Collectors.toList());
-                case DOWN_PRICE:
-                    return productList.stream().sorted(Comparator.comparing(Product::getPrice).reversed()).collect(Collectors.toList());
+            switch (SortOption.from(sortingParameter)) {
+                case DESCRIPTION_ASC:
+                    productList.sort(DESCRIPTION_ASC.getComparator());
+                    return productList;
+                case DESCRIPTION_DESC:
+                    productList.sort(DESCRIPTION_DESC.getComparator());
+                    return productList;
+                case PRICE_ASC:
+                    productList.sort(PRICE_ASC.getComparator());
+                    return productList;
+                case PRICE_DESC:
+                    productList.sort(PRICE_DESC.getComparator());
+                    return productList;
                 default:
                     return productList;
             }

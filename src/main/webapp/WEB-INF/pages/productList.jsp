@@ -7,7 +7,7 @@
   <head>
     <title>Product List</title>
     <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/styles/main.css">
+    <link rel="stylesheet" href="<c:url value="/styles/main.css"/>">
   </head>
   <body class="product-list">
     <jsp:include page="header.jsp"/>
@@ -23,8 +23,8 @@
         <thead>
           <tr>
             <td>Image</td>
-            <td>Description <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=upDescription"/>">up</a> <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=downDescription"/>">down</a></td>
-            <td class="price">Price <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=upPrice"/>">up</a> <a href="<c:url value="/products?searchLine=${searchLineAttrib}&sortingParameter=downPrice"/>">down</a> </td>
+            <td>Description <a href="<c:url value="/products"><c:param name="searchLine" value="${searchLineAttrib}"/><c:param name="sortingParameter" value="upDescription"/></c:url>">up</a> <a href="<c:url value="/products"><c:param name="searchLine" value="${searchLineAttrib}"/><c:param name="sortingParameter" value="downDescription"/></c:url>">down</a></td>
+            <td class="price">Price <a href="<c:url value="/products"><c:param name="searchLine" value="${searchLineAttrib}"/><c:param name="sortingParameter" value="upPrice"/></c:url>">up</a> <a href="<c:url value="/products"><c:param name="searchLine" value="${searchLineAttrib}"/><c:param name="sortingParameter" value="downPrice"/></c:url>">down</a> </td>
           </tr>
         </thead>
         <c:forEach var="product" items="${products}">
