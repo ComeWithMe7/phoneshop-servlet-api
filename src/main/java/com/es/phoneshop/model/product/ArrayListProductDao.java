@@ -47,4 +47,5 @@ public class ArrayListProductDao implements ProductDao {
 
     @Override
     public void delete(Long id) { products.removeIf(x -> x.getId().equals(id)); }
+
 }

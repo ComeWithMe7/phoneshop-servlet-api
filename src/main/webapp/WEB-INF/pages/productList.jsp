@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <jsp:useBean id="products" type="java.util.ArrayList" scope="request"/>
 <html>
   <head>
@@ -28,6 +29,20 @@
           </tr>
         </thead>
         <c:forEach var="product" items="${products}">
+          <tr>
+            <td>
+              <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${product.imageUrl}">
+            </td>
+            <td><a href="<c:url value="/products/${product.id}"/>">${product.description}</a></td>
+            <td class="price">
+              <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
+            </td>
+          </tr>
+        </c:forEach>
+      </table>
+      <h2>Recently viewed</h2>
+      <table>
+        <c:forEach var="product" items="${sessionScope.viewedProducts}">
           <tr>
             <td>
               <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${product.imageUrl}">

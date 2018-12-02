@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+
 <html>
     <head>
         <title>Product Detail</title>
@@ -33,6 +35,21 @@
                         </td>
                     </tr>
             </table>
+            <form method="post" action="<c:url value="/products/${product.id}"/>">
+                <p><input type="search" name="quantity" value="${quantity}">
+                    <button type="submit" name="id", value="${product.id}">add</button></p>
+            </form>
+            <p>${quantityAnswer}</p>
+            <h3>Your cart</h3>
+            <c:forEach var="cartItem" items="${sessionScope.cart}">
+                <tr>
+                    <td>
+                        <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${cartItem.product.imageUrl}">
+                    </td>
+                    <td><a href="<c:url value="/products/${cartItem.product.id}"/>">${cartItem.product.description}</a></td>
+                    <td>${cartItem.quantity}</td>
+                </tr>
+            </c:forEach>
         </main>
     </body>
 </html>
