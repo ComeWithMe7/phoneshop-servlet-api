@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public class CartService {
 
+    // TODO remove this field, pass it via parameter
     private Cart cart;
 
     public CartService(Cart cart) {
@@ -22,11 +23,13 @@ public class CartService {
             CartItem existingCartItem = optionalCartItem.get();
             cart.delete(existingCartItem);
             int quantity = existingCartItem.getQuantity() + cartItem.getQuantity();
+            // TODO productDao must be a member variable
             if (quantity > ArrayListProductDao.getInstance().getProduct(cartItem.getProduct().getId()).getStock()) {
                 throw new RuntimeException();
             }
             cart.save(new CartItem(existingCartItem.getProduct(), quantity));
         } else {
+            // TODO productDao must be a member variable
             if (cartItem.getQuantity() > ArrayListProductDao.getInstance().getProduct(cartItem.getProduct().getId()).getStock()) {
                 throw new RuntimeException();
             }

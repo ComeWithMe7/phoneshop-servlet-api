@@ -21,6 +21,7 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     private ArrayListProductDao() {
+        // TODO why did you use ArrayList when constructing CopyOnWriteArrayList?
         products = new CopyOnWriteArrayList(new ArrayList<>(13));
     }
 
@@ -29,6 +30,7 @@ public class ArrayListProductDao implements ProductDao {
         return products.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
+                // TODO use orElseThrow, create ProductNotFoundException, map it to 404 error page
                 .get();
     }
 

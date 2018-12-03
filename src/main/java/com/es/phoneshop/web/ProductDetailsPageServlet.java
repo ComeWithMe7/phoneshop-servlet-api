@@ -73,6 +73,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
         Product product = productDao.getProduct(Long.parseLong(req.getParameter(PRODUCT_ID)));
         try {
             int quantity = Integer.parseInt(req.getParameter(QUANTITY));
+            // TODO move as much cart logic as possible to cart service
             if (cart == null) {
                 cart = new Cart();
                 cart.save(new CartItem(product, quantity));
@@ -80,17 +81,24 @@ public class ProductDetailsPageServlet extends HttpServlet {
                 String path = req.getContextPath() + "/products/" + req.getParameter(PRODUCT_ID) + "?quantityAnswer=" + ADWANTAGED_ANSWER + "&quantity=" + quantity;
                 resp.sendRedirect(path);
             } else {
+                // TODO service classes generally mast have only an instance across entire application
+                // TODO cartService should be a member variable
                 CartService cartService = new CartService(cart);
                 CartItem cartItem = new CartItem(product, quantity);
                 try {
                     cartService.addToCart(cartItem);
+                    // TODO don't use exceptions for flow controlling
                 } catch (RuntimeException ex) {
                     String path = req.getContextPath() + "/products/" + req.getParameter(PRODUCT_ID) + "?quantityAnswer=" + "Not enough stock" + "&quantity=" + quantity;
+                    // TODO in case of low stock there is should be forward instead of redirect
                     resp.sendRedirect(path);
                 }
+                // TODO redundant method call
                 session.removeAttribute(CART);
+                // TODO it's better delegate to cartService rather to servlet
                 session.setAttribute(CART, cartService.getCart());
 
+                // TODO use String.format
                 String path = req.getContextPath() + "/products/" + req.getParameter(PRODUCT_ID) + "?quantityAnswer=" + ADWANTAGED_ANSWER + "&quantity=" + quantity;
                 resp.sendRedirect(path);
 

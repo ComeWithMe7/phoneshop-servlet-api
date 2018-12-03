@@ -90,6 +90,7 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return getStock() == product.getStock() &&
+                // TODO exclude id from #equals and #hashCode
                 Objects.equals(getId(), product.getId()) &&
                 Objects.equals(getCode(), product.getCode()) &&
                 Objects.equals(getDescription(), product.getDescription()) &&

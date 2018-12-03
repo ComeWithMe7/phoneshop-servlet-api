@@ -5,9 +5,13 @@ import com.es.phoneshop.model.product.Product;
 import java.util.Objects;
 
 public class CartItem {
+    // TODO make this field final
+    // TODO store product code or id in the session
     private Product product;
+    // TODO make this field final
     private int quantity;
 
+    // TODO remove unused constructor
     public CartItem() { }
 
     public CartItem(Product product, int quantity) {
