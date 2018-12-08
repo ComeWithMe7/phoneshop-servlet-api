@@ -1,6 +1,5 @@
 package com.es.phoneshop.model.product;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
@@ -21,7 +20,7 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     private ArrayListProductDao() {
-        products = new CopyOnWriteArrayList(new ArrayList<>(13));
+        products = new CopyOnWriteArrayList();
     }
 
     @Override
@@ -29,7 +28,7 @@ public class ArrayListProductDao implements ProductDao {
         return products.stream()
                 .filter(x -> x.getId().equals(id))
                 .findFirst()
-                .get();
+                .orElseThrow(ProductNotFoundException::new);
     }
 
     @Override

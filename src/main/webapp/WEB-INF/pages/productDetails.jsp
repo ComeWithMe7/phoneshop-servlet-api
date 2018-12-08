@@ -41,7 +41,8 @@
             </form>
             <p>${quantityAnswer}</p>
             <h3>Your cart</h3>
-            <c:forEach var="cartItem" items="${sessionScope.cart}">
+            <table>
+            <c:forEach var="cartItem" items="${sessionScope.cart.cartItemList}">
                 <tr>
                     <td>
                         <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${cartItem.product.imageUrl}">
@@ -50,6 +51,7 @@
                     <td>${cartItem.quantity}</td>
                 </tr>
             </c:forEach>
+            </table>
         </main>
     </body>
 </html>

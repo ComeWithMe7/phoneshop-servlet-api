@@ -42,7 +42,7 @@
       </table>
       <h2>Recently viewed</h2>
       <table>
-        <c:forEach var="product" items="${sessionScope.viewedProducts}">
+        <c:forEach var="product" items="${sessionScope.viewedProducts.productList}">
           <tr>
             <td>
               <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${product.imageUrl}">

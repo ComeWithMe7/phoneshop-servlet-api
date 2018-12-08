@@ -1,34 +1,31 @@
-package com.es.phoneshop.model.product.сart;
+package com.es.phoneshop.model.сart;
 
+import com.es.phoneshop.model.product.ArrayListProductDao;
 import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.model.product.ProductDao;
 
 import java.util.Objects;
 
 public class CartItem {
-    private Product product;
-    private int quantity;
+    private final Long productID;
+    private final int quantity;
+    private static final ProductDao products = ArrayListProductDao.getInstance();
 
-    public CartItem() { }
-
-    public CartItem(Product product, int quantity) {
-        this.product = product;
+    public CartItem(Long productID, int quantity) {
+        this.productID = productID;
         this.quantity = quantity;
     }
 
     public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+        return products.getProduct(productID);
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public Long getProductID() {
+        return productID;
     }
 
     @Override
@@ -37,7 +34,7 @@ public class CartItem {
         if (o == null || getClass() != o.getClass()) return false;
         CartItem cartItem = (CartItem) o;
         return getQuantity() == cartItem.getQuantity() &&
-                Objects.equals(getProduct(), cartItem.getProduct());
+                Objects.equals(getProductID(), cartItem.getProductID());
     }
 
     @Override
@@ -48,7 +45,7 @@ public class CartItem {
     @Override
     public String toString() {
         return "CartItem{" +
-                "product=" + product +
+                "productID=" + productID +
                 ", quantity=" + quantity +
                 '}';
     }

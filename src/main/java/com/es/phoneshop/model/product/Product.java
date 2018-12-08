@@ -89,17 +89,12 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return getStock() == product.getStock() &&
-                Objects.equals(getId(), product.getId()) &&
-                Objects.equals(getCode(), product.getCode()) &&
-                Objects.equals(getDescription(), product.getDescription()) &&
-                Objects.equals(getPrice(), product.getPrice()) &&
-                Objects.equals(getCurrency(), product.getCurrency()) &&
-                Objects.equals(getImageUrl(), product.getImageUrl());
+        return  Objects.equals(getId(), product.getId()) &&
+                Objects.equals(getCode(), product.getCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getDescription(), getPrice(), getCurrency(), getStock(), getImageUrl());
+        return Objects.hash(getId(), getCode());
     }
 }
