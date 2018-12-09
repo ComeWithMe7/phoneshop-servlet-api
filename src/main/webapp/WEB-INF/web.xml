@@ -25,6 +25,26 @@
     <url-pattern>/products/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>cartPage</servlet-name>
+    <servlet-class>com.es.phoneshop.web.CartPageServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>cartPage</servlet-name>
+    <url-pattern>/products/cart</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CartItemDelete</servlet-name>
+    <servlet-class>com.es.phoneshop.web.CartItemDeleteServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CartItemDelete</servlet-name>
+    <url-pattern>/cart/*/delete</url-pattern>
+  </servlet-mapping>
+
   <!--<error-page>-->
     <!--<exception-type>java.lang.RuntimeException</exception-type>-->
     <!--<location>/error.jsp</location>-->

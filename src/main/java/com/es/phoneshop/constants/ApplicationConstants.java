@@ -10,5 +10,8 @@ public class ApplicationConstants {
     public static final String QUANTITY  = "quantity";
     public static final String QUANTITY_ANSWER = "quantityAnswer";
     public static final String CART = "cart";
-
+    public static final String NOT_A_NUMBER = "Not a number";
+    public static final String SUCSESSFUL_UPDATE = "Cart was sucsessfully updated";
+    public static final String UNSUCSESSFUL_UPDATE = "Cart wasn't fully updated";
+    public static final String INVALID_QUANTITY = "Not enough stock";
 }

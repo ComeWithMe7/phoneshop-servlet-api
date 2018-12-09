@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-
 <html>
     <head>
         <title>Product Detail</title>
@@ -16,7 +14,6 @@
             <p>
                 Welcome to Expert-Soft training!
             </p>
-
             <table>
                 <thead>
                 <tr>
@@ -47,11 +44,15 @@
                     <td>
                         <img class="product-tile" src="https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/${cartItem.product.imageUrl}">
                     </td>
-                    <td><a href="<c:url value="/products/${cartItem.product.id}"/>">${cartItem.product.description}</a></td>
+                    <td><a href="<c:url value="/products/${cartItem.productID}"/>">${cartItem.product.description}</a></td>
                     <td>${cartItem.quantity}</td>
                 </tr>
             </c:forEach>
             </table>
+            <br>
+            <form method="get" action="<c:url value="/products/cart"/>">
+                <input type="submit" value="Cart"></p>
+            </form>
         </main>
     </body>
 </html>

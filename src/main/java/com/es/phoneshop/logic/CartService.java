@@ -6,9 +6,12 @@ import com.es.phoneshop.model.сart.Cart;
 import com.es.phoneshop.model.сart.CartItem;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 import static com.es.phoneshop.constants.ApplicationConstants.CART;
+import static com.es.phoneshop.constants.ApplicationConstants.INVALID_QUANTITY;
+import static com.es.phoneshop.constants.ApplicationConstants.NOT_A_NUMBER;
 
 public class CartService {
 
@@ -61,6 +64,37 @@ public class CartService {
             }
             cart.save(cartItem);
         }
+    }
+
+    public boolean updateCart(HttpSession session, List<String> quantitiesString) {
+        Cart cart = (Cart)session.getAttribute(CART);
+        List<CartItem> cartItems = cart.getCartItemList();
+        boolean update = true;
+        for (int i = 0; i < quantitiesString.size(); i++) {
+            cartItems.get(i).setInputQuantity(quantitiesString.get(i));
+            try {
+                Integer quantity = Integer.parseInt(quantitiesString.get(i));
+                if (quantity >= 0 && quantity < cartItems.get(i).getProduct().getStock()) {
+                    cartItems.get(i).setQuantity(quantity);
+                    cartItems.get(i).setAnswer("");
+                } else {
+                    cartItems.get(i).setAnswer(INVALID_QUANTITY);
+                    update = false;
+                }
+            } catch (NumberFormatException ex) {
+                cartItems.get(i).setAnswer(NOT_A_NUMBER);
+                update = false;
+            }
+        }
+        session.setAttribute(CART, cart);
+        return update;
+    }
+
+    public void deleteCartItem(HttpSession session, Long id) {
+        Cart cart = (Cart)session.getAttribute(CART);
+        List<CartItem> cartItems = cart.getCartItemList();
+        cartItems.removeIf(x -> x.getProductID().equals(id));
+        session.setAttribute(CART, cartItems);
     }
 
 }
