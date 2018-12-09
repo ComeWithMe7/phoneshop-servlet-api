@@ -94,7 +94,8 @@ public class CartService {
         Cart cart = (Cart)session.getAttribute(CART);
         List<CartItem> cartItems = cart.getCartItemList();
         cartItems.removeIf(x -> x.getProductID().equals(id));
-        session.setAttribute(CART, cartItems);
+        cart.setCartItemList(cartItems);
+        session.setAttribute(CART, cart);
     }
 
 }

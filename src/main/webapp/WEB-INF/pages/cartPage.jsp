@@ -15,13 +15,13 @@
         Welcome to Expert-Soft training!
     </p>
     <h3>Your cart</h3>
-    <c:if test="${sessionScope.cart == null}">
+    <c:if test="${empty sessionScope.cart.cartItemList}">
         <p>Your cart is empty</p>
     </c:if>
-    <c:if test="${sessionScope.cart != null}">
+    <c:if test="${not empty sessionScope.cart.cartItemList}">
         ${quantityAnswer}
         <br>
-        <form method="post" action="<c:url value="/products/cart"/>">
+        <form method="post" action="<c:url value="/cart"/>">
             <table>
                     <c:forEach var="cartItem" items="${sessionScope.cart.cartItemList}">
                         <tr>

@@ -1,11 +1,10 @@
 package com.es.phoneshop.model.сart;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Cart {
-    private final List<CartItem> cartItemList;
+    private List<CartItem> cartItemList;
 
     public Cart() {
         cartItemList = new ArrayList<>();
@@ -16,7 +15,11 @@ public class Cart {
     }
 
     public List<CartItem> getCartItemList() {
-        return Collections.unmodifiableList(cartItemList);
+        return cartItemList;
+    }
+
+    public void setCartItemList(List<CartItem> cartItemList) {
+        this.cartItemList = cartItemList;
     }
 
     public void delete(CartItem cartItem) {

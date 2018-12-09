@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.es.phoneshop.constants.ApplicationConstants.QUANTITY_ANSWER;
+import static com.es.phoneshop.constants.ApplicationConstants.SUCSESSFUL_UPDATE;
+
 public class CartItemDeleteServlet extends HttpServlet {
 
     private CartService cartService;
@@ -22,18 +25,19 @@ public class CartItemDeleteServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         doPost(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Pattern pattern = Pattern.compile("/\\d+");
         Matcher matcher = pattern.matcher(req.getRequestURI());
         matcher.find();
-        String productCode = matcher.group().substring(matcher.start() + 1);
+        String productCode = matcher.group().substring(1);
         Long id = Long.parseLong(productCode);
         cartService.deleteCartItem(req.getSession(), id);
-        req.getRequestDispatcher("/WEB-INF/pages/productDetails.jsp").forward(req, resp);
+        String path = req.getContextPath() + "/cart?" + QUANTITY_ANSWER + "=" + SUCSESSFUL_UPDATE;
+        resp.sendRedirect(path);
     }
 }
