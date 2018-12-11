@@ -3,6 +3,7 @@ package com.es.phoneshop.model.сart;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO implement add, update, delete methods. Don't allow to modify cartItemList to other classes directly.
 public class Cart {
     private List<CartItem> cartItemList;
 
@@ -14,6 +15,7 @@ public class Cart {
         cartItemList.add(cartItem);
     }
 
+    // TODO return unmodifiable copy of items
     public List<CartItem> getCartItemList() {
         return cartItemList;
     }

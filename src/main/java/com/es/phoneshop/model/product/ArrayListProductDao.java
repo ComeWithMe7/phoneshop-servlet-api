@@ -20,6 +20,7 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     private ArrayListProductDao() {
+        // TODO use diamond operator
         products = new CopyOnWriteArrayList();
     }
 

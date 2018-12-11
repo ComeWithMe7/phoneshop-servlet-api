@@ -33,7 +33,9 @@
                     </tr>
             </table>
             <form method="post" action="<c:url value="/products/${product.id}"/>">
+                <%-- TODO type="search"? Set 1 as default value --%>
                 <p><input type="search" name="quantity" value="${quantity}">
+                    <%-- TODO id is an extra parameter--%>
                     <button type="submit" name="id", value="${product.id}">add</button></p>
             </form>
             <p>${quantityAnswer}</p>

@@ -13,6 +13,7 @@ public class ViewedProducts {
 
     public void push(Product product) {
             if (productList.size() < maxSize) {
+                // TODO redundant check
                 if (productList.contains(product)) {
                     productList.remove(product);
                 }
@@ -27,6 +28,7 @@ public class ViewedProducts {
             }
     }
 
+    // TODO it's better return Iterable<Product>. Explain why.
     public Queue<Product> getProductList() {
         return productList;
     }

@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
 
+// TODO extra task: make SortOption as a Comparator<Product>
 public enum SortOption {
 
     DESCRIPTION_ASC(comparing(Product::getDescription)),
@@ -18,10 +19,12 @@ public enum SortOption {
         this.comparator = comparator;
     }
 
+    // TODO extra task: remove this method
     public Comparator<Product> getComparator() {
         return comparator;
     }
 
+    // TODO extra task: use SortOption.values() to find required sort
     public static SortOption from(String sortParam) {
             switch (sortParam) {
                 case "upDescription":

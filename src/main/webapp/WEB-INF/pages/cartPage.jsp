@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%-- TODO add template tag--%>
 <html>
 <head>
     <title>Product Detail</title>
@@ -37,6 +38,7 @@
                                 <p>${cartItem.answer}</p>
                             </td>
                             <td>
+                                <%-- TODO removal must not be performed on GET request --%>
                                 <a href="<c:url value="/cart/${cartItem.product.id}/delete"/>">delete</a>
                             </td>
                         </tr>

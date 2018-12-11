@@ -84,6 +84,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
+    // TODO exclude id from equals and hash code and explain why
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -30,6 +30,8 @@ public class CartPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // TODO cart update depends on cart item order
+        // TODO zero or negative quantity must not be permitted
         List<String> quantities = Arrays.asList(req.getParameterValues("quantity"));
         if (!cartService.updateCart(req.getSession(), quantities)) {
             req.setAttribute(QUANTITY_ANSWER, UNSUCSESSFUL_UPDATE);

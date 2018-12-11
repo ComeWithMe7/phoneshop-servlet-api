@@ -9,8 +9,10 @@ import java.util.Objects;
 public class CartItem {
     private final Long productID;
     private int quantity;
+    // TODO 'answer' and 'inputQuantity' are not a part of CartItem
     private String answer;
     private String inputQuantity;
+    // TODO never use services in data classes
     private static final ProductDao products = ArrayListProductDao.getInstance();
 
     public CartItem(Long productID, int quantity) {
@@ -19,6 +21,7 @@ public class CartItem {
         inputQuantity = Integer.valueOf(quantity).toString();
     }
 
+    // TODO this approach is worse than storing entire product
     public Product getProduct() {
         return products.getProduct(productID);
     }

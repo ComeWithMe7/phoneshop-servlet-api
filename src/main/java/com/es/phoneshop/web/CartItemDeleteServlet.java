@@ -25,12 +25,14 @@ public class CartItemDeleteServlet extends HttpServlet {
     }
 
     @Override
+    // TODO cart item deletion must not be performed on GET request!
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //TODO don't create pattern for every request. Regex is not correct.
         Pattern pattern = Pattern.compile("/\\d+");
         Matcher matcher = pattern.matcher(req.getRequestURI());
         matcher.find();
