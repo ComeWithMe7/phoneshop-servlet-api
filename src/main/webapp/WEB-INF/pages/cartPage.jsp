@@ -31,13 +31,12 @@
                             <td><a href="<c:url value="/products/${cartItem.product.id}"/>">${cartItem.product.description}</a></td>
                             <td>${cartItem.quantity}</td>
                             <td>
-
-                                <p><input type="search" name="quantity" value="${cartItem.inputQuantity}"></p>
+                                <p><input type="search" name="quantity" value="${not empty quantityMap[cartItem.productID] ? quantityMap[cartItem.productID] : cartItem.quantity}"></p>
                                 <input type="hidden" name="productID" value="${cartItem.product.id}">
-                                <p>${cartItem.answer}</p>
+                                <p>${answers[cartItem.productID]}</p>
                             </td>
                             <td>
-                                <a href="<c:url value="/cart/${cartItem.product.id}/delete"/>">delete</a>
+                                <button formaction="<c:url value = "cart/${cartItem.productID}/delete" />">delete</button>
                             </td>
                         </tr>
                     </c:forEach>

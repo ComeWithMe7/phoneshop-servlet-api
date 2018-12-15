@@ -20,7 +20,7 @@ public class ArrayListProductDao implements ProductDao {
     }
 
     private ArrayListProductDao() {
-        products = new CopyOnWriteArrayList();
+        products = new CopyOnWriteArrayList<>();
     }
 
     @Override

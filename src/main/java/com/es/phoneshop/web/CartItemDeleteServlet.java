@@ -17,24 +17,20 @@ import static com.es.phoneshop.constants.ApplicationConstants.SUCSESSFUL_UPDATE;
 public class CartItemDeleteServlet extends HttpServlet {
 
     private CartService cartService;
+    private Pattern pattern;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         cartService = CartService.getInstance();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        doPost(req, resp);
+        pattern = Pattern.compile("/\\d+/");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Pattern pattern = Pattern.compile("/\\d+");
         Matcher matcher = pattern.matcher(req.getRequestURI());
         matcher.find();
-        String productCode = matcher.group().substring(1);
+        String productCode = matcher.group().substring(1, matcher.group().length() - 1);
         Long id = Long.parseLong(productCode);
         cartService.deleteCartItem(req.getSession(), id);
         String path = req.getContextPath() + "/cart?" + QUANTITY_ANSWER + "=" + SUCSESSFUL_UPDATE;

@@ -9,14 +9,11 @@ import java.util.Objects;
 public class CartItem {
     private final Long productID;
     private int quantity;
-    private String answer;
-    private String inputQuantity;
     private static final ProductDao products = ArrayListProductDao.getInstance();
 
     public CartItem(Long productID, int quantity) {
         this.productID = productID;
         this.quantity = quantity;
-        inputQuantity = Integer.valueOf(quantity).toString();
     }
 
     public Product getProduct() {
@@ -33,23 +30,6 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        inputQuantity = Integer.valueOf(quantity).toString();
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getInputQuantity() {
-        return inputQuantity;
-    }
-
-    public void setInputQuantity(String inputQuantity) {
-        this.inputQuantity = inputQuantity;
     }
 
     @Override

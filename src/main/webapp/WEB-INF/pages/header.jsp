@@ -2,6 +2,6 @@
 <header>
     <a href="<c:url value="/products"/>">
         <img src="<c:url value="/images/logo.svg"/>">
-        PhoneShop
+        PhoneShop   Total:${cart.total}
     </a>
 </header>

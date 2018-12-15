@@ -1,21 +1,22 @@
 package com.es.phoneshop.logic;
 
-import com.es.phoneshop.model.product.ArrayListProductDao;
-import com.es.phoneshop.model.product.ProductDao;
 import com.es.phoneshop.model.сart.Cart;
 import com.es.phoneshop.model.сart.CartItem;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
-import static com.es.phoneshop.constants.ApplicationConstants.CART;
-import static com.es.phoneshop.constants.ApplicationConstants.INVALID_QUANTITY;
-import static com.es.phoneshop.constants.ApplicationConstants.NOT_A_NUMBER;
+import static com.es.phoneshop.constants.ApplicationConstants.*;
 
 public class CartService {
 
-    private final ProductDao productDao;
     private static volatile CartService cartServiceInstance;
 
     public static CartService getInstance() {
@@ -29,73 +30,86 @@ public class CartService {
         return cartServiceInstance;
     }
 
-    private CartService() {
-        productDao = ArrayListProductDao.getInstance();
-    }
+    private CartService() {   }
 
-    public void addToCart(HttpSession session, Long productID, int quantity) {
+    public boolean addToCart(HttpSession session, Long productID, int quantity) {
         Cart cart = (Cart)session.getAttribute(CART);
         if (cart == null) {
             cart = new Cart();
-            saveCartItem(cart, new CartItem(productID, quantity));
-            session.setAttribute(CART, cart);
+            if (saveCartItem(cart, new CartItem(productID, quantity))) {
+                session.setAttribute(CART, cart);
+                return true;
+            }
         } else {
-            saveCartItem(cart, new CartItem(productID, quantity));
-            session.setAttribute(CART, cart);
+            return saveCartItem(cart, new CartItem(productID, quantity));
         }
+        return false;
     }
 
-    private void saveCartItem(Cart cart, CartItem cartItem) {
+    private boolean saveCartItem(Cart cart, CartItem cartItem) {
         Optional<CartItem> optionalCartItem = cart.getCartItemList().stream()
                 .filter(x -> x.getProductID().equals(cartItem.getProductID()))
-                .findFirst();
+                .findAny();
         if (optionalCartItem.isPresent()) {
             CartItem existingCartItem = optionalCartItem.get();
-            cart.delete(existingCartItem);
+            cart.delete(existingCartItem.getProductID());
             int quantity = existingCartItem.getQuantity() + cartItem.getQuantity();
-            if (quantity > cartItem.getProduct().getStock()) {
+            if (cartItem.getQuantity() <=0 || quantity <= 0 || quantity > cartItem.getProduct().getStock()) {
                 cart.save(existingCartItem);
-                throw new RuntimeException();
+                cart.countTotal();
+                return false;
             }
             cart.save(new CartItem(existingCartItem.getProductID(), quantity));
+            cart.countTotal();
+            return true;
         } else {
-            if (cartItem.getQuantity() > cartItem.getProduct().getStock()) {
-                throw new RuntimeException();
+            if (cartItem.getQuantity() <=0 || cartItem.getQuantity() > cartItem.getProduct().getStock()) {
+                return false;
             }
             cart.save(cartItem);
+            cart.countTotal();
+            return true;
         }
     }
 
-    public boolean updateCart(HttpSession session, List<String> quantitiesString) {
-        Cart cart = (Cart)session.getAttribute(CART);
-        List<CartItem> cartItems = cart.getCartItemList();
-        boolean update = true;
-        for (int i = 0; i < quantitiesString.size(); i++) {
-            cartItems.get(i).setInputQuantity(quantitiesString.get(i));
-            try {
-                Integer quantity = Integer.parseInt(quantitiesString.get(i));
-                if (quantity >= 0 && quantity < cartItems.get(i).getProduct().getStock()) {
-                    cartItems.get(i).setQuantity(quantity);
-                    cartItems.get(i).setAnswer("");
-                } else {
-                    cartItems.get(i).setAnswer(INVALID_QUANTITY);
-                    update = false;
+    public boolean updateCart(HttpServletRequest request, List<String> quantitiesString, List<String> idsString) {
+        Cart cart = (Cart)request.getSession().getAttribute(CART);
+        List<Long> ids = new ArrayList<>();
+        idsString.stream()
+                .mapToLong(Long::parseLong)
+                .forEach(ids::add);
+        Map<Long, String> answers = new HashMap<>();
+        Map<Long, String> inputQuantities = new HashMap<>();
+        for (int i = 0; i < ids.size(); i++) {
+            if (cart.getById(ids.get(i)) != null) {
+                inputQuantities.put(ids.get(i), quantitiesString.get(i));
+                try {
+                    int quantity = Integer.parseInt(quantitiesString.get(i));
+                    if (quantity > 0 && quantity < cart.getById(ids.get(i)).getProduct().getStock()) {
+                        cart.getById(ids.get(i)).setQuantity(quantity);
+                        answers.put(ids.get(i), "");
+                    } else {
+                        answers.put(ids.get(i), INVALID_QUANTITY);
+                    }
+                } catch (NumberFormatException ex) {
+                    answers.put(ids.get(i), NOT_A_NUMBER);
                 }
-            } catch (NumberFormatException ex) {
-                cartItems.get(i).setAnswer(NOT_A_NUMBER);
-                update = false;
             }
         }
-        session.setAttribute(CART, cart);
-        return update;
+        cart.countTotal();
+        request.setAttribute(QUANTITY_MAP, inputQuantities);
+        request.setAttribute(ANSWERS, answers);
+        if (answers.containsValue(NOT_A_NUMBER) || answers.containsValue(INVALID_QUANTITY)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void deleteCartItem(HttpSession session, Long id) {
         Cart cart = (Cart)session.getAttribute(CART);
-        List<CartItem> cartItems = cart.getCartItemList();
-        cartItems.removeIf(x -> x.getProductID().equals(id));
-        cart.setCartItemList(cartItems);
-        session.setAttribute(CART, cart);
+        cart.delete(id);
+        cart.countTotal();
     }
 
 }

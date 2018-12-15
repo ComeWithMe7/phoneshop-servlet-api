@@ -33,8 +33,10 @@
                     </tr>
             </table>
             <form method="post" action="<c:url value="/products/${product.id}"/>">
-                <p><input type="search" name="quantity" value="${quantity}">
-                    <button type="submit" name="id", value="${product.id}">add</button></p>
+                <p><input type="search" name="quantity" value="${not empty quantity ? quantity : 1}">
+                    <button type="submit">add</button>
+                    <input type="hidden" name="id" value="${product.id}">
+                </p>
             </form>
             <p>${quantityAnswer}</p>
             <h3>Your cart</h3>

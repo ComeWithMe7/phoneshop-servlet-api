@@ -31,7 +31,8 @@ public class CartPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> quantities = Arrays.asList(req.getParameterValues("quantity"));
-        if (!cartService.updateCart(req.getSession(), quantities)) {
+        List<String> ids = Arrays.asList(req.getParameterValues("productID"));
+        if (!cartService.updateCart(req, quantities, ids)) {
             req.setAttribute(QUANTITY_ANSWER, UNSUCSESSFUL_UPDATE);
             req.getRequestDispatcher("/WEB-INF/pages/cartPage.jsp").forward(req, resp);
         } else {

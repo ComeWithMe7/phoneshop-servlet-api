@@ -14,6 +14,7 @@
     <title>404</title>
 </head>
 <body>
-<h2> <%= message %> </h2>
+<h1>${pageContext.response.setStatus(404, "((")}</h1>
+<h2> ${pageContext.exception.message} </h2>
 </body>
 </html>

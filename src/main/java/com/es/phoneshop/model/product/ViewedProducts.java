@@ -1,7 +1,10 @@
 package com.es.phoneshop.model.product;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayDeque;
 import java.util.Queue;
+
+import static com.es.phoneshop.constants.ApplicationConstants.VIEWED_PRODUCTS;
 
 public class ViewedProducts {
     private final Queue<Product> productList;
@@ -13,9 +16,7 @@ public class ViewedProducts {
 
     public void push(Product product) {
             if (productList.size() < maxSize) {
-                if (productList.contains(product)) {
-                    productList.remove(product);
-                }
+                productList.remove(product);
                 productList.offer(product);
             } else {
                 if (productList.contains(product)) {
@@ -27,7 +28,19 @@ public class ViewedProducts {
             }
     }
 
-    public Queue<Product> getProductList() {
+    public Iterable<Product> getProductList() {
         return productList;
+    }
+
+    public static void setupCiewedProducts(HttpSession session, Product product) {
+        ViewedProducts viewedProducts = (ViewedProducts) session.getAttribute(VIEWED_PRODUCTS);
+        if (viewedProducts == null) {
+            viewedProducts = new ViewedProducts();
+            viewedProducts.push(product);
+            session.setAttribute(VIEWED_PRODUCTS, viewedProducts);
+        } else {
+            viewedProducts.push(product);
+            session.setAttribute(VIEWED_PRODUCTS, viewedProducts);
+        }
     }
 }

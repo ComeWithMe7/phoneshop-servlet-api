@@ -14,4 +14,6 @@ public class ApplicationConstants {
     public static final String SUCSESSFUL_UPDATE = "Cart was sucsessfully updated";
     public static final String UNSUCSESSFUL_UPDATE = "Cart wasn't fully updated";
     public static final String INVALID_QUANTITY = "Not enough stock";
+    public static final String ANSWERS   = "answers";
+    public static final String QUANTITY_MAP   = "quantityMap";
 }
