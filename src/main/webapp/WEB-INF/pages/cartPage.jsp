@@ -44,6 +44,9 @@
             <br>
             <p><input type="submit" value="Update"></p>
         </form>
+        <form action="<c:url value="/checkout"/>">
+            <input type="submit" value="Checkout">
+        </form>
     </c:if>
 </main>
 </body>

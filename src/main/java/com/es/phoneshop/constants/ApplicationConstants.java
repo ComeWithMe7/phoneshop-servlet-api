@@ -14,6 +14,16 @@ public class ApplicationConstants {
     public static final String SUCSESSFUL_UPDATE = "Cart was sucsessfully updated";
     public static final String UNSUCSESSFUL_UPDATE = "Cart wasn't fully updated";
     public static final String INVALID_QUANTITY = "Not enough stock";
-    public static final String ANSWERS   = "answers";
-    public static final String QUANTITY_MAP   = "quantityMap";
+    public static final String ANSWERS = "answers";
+    public static final String QUANTITY_MAP = "quantityMap";
+
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String PHONE_NUMBER = "phone";
+    public static final String DELIVERY_ADDRESS = "address";
+    public static final String ORDER = "order";
+
+//    public static final String MODE = "mode";
+//    public static final String PAYMENT = "payment";
+//    public static final String COSTS = "costs";
 }

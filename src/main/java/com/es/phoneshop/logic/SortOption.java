@@ -2,9 +2,7 @@ package com.es.phoneshop.logic;
 
 import com.es.phoneshop.model.product.Product;
 
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Optional;
 
 import static java.util.Comparator.comparing;
 
@@ -26,11 +24,16 @@ public enum SortOption {
     }
 
     public static SortOption from(String sortParam) {
-        Optional<SortOption> sortOption = Arrays.stream(SortOption.values()).filter(x -> sortParam.equals(x)).findAny();
-        if (!sortOption.isPresent()) {
-            throw new IllegalArgumentException("No enum constant for sort param: " + sortParam);
-        } else {
-            return sortOption.get();
+        switch (sortParam) {
+            case "upDescription":
+                return DESCRIPTION_ASC;
+            case "downDescription":
+                return DESCRIPTION_DESC;
+            case "upPrice":
+                return PRICE_ASC;
+            case "downPrice":
+                return PRICE_DESC;
         }
+        throw new IllegalArgumentException("No enum constant for sort param: " + sortParam);
     }
 }
