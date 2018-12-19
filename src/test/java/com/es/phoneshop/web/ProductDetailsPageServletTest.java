@@ -50,20 +50,20 @@
 //        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
 //    }
 //
-////    @Test
-////    public void doGet() throws ServletException, IOException {
-////        when(request.getRequestURI()).thenReturn(URI);
-////
-////        servlet.doGet(request, response);
-////
-////        verify(request).setAttribute("product", product);
-////        verify(requestDispatcher).forward(request, response);
-////    }
-////
-////    @Test(expected = NumberFormatException.class)
-////    public void doGetWhenProductIdIsMalformed() throws ServletException, IOException {
-////        when(request.getRequestURI()).thenReturn(MALFORMED_URI);
-////
-////        servlet.doGet(request, response);
-////    }
+//    @Test
+//    public void doGet() throws ServletException, IOException {
+//        when(request.getRequestURI()).thenReturn(URI);
+//
+//        servlet.doGet(request, response);
+//
+//        verify(request).setAttribute("product", product);
+//        verify(requestDispatcher).forward(request, response);
+//    }
+//
+//    @Test(expected = NumberFormatException.class)
+//    public void doGetWhenProductIdIsMalformed() throws ServletException, IOException {
+//        when(request.getRequestURI()).thenReturn(MALFORMED_URI);
+//
+//        servlet.doGet(request, response);
+//    }
 //}

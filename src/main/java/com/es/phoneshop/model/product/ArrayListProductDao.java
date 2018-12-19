@@ -1,5 +1,6 @@
 package com.es.phoneshop.model.product;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 public class ArrayListProductDao implements ProductDao {
     private final List<Product> products;
     private static volatile ArrayListProductDao arrayListProductDaoInstance;
+    private final MostViewedProducts mostViewedProducts = MostViewedProducts.getInstance();
 
     public static ArrayListProductDao getInstance() {
         if (arrayListProductDaoInstance == null) {
@@ -42,9 +44,17 @@ public class ArrayListProductDao implements ProductDao {
     @Override
     public void save(Product product)  {
         products.add(product);
+        mostViewedProducts.add(product.getId());
     }
 
     @Override
-    public void delete(Long id) { products.removeIf(x -> x.getId().equals(id)); }
+    public void delete(Long id) {
+        mostViewedProducts.delete(id);
+        products.removeIf(x -> x.getId().equals(id));
+    }
+
+    public List<Product> listOfProducts() {
+        return Collections.unmodifiableList(products);
+    }
 
 }

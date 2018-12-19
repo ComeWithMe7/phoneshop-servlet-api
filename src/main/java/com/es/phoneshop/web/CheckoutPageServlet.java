@@ -1,7 +1,6 @@
 package com.es.phoneshop.web;
 
 import com.es.phoneshop.model.order.OrderDao;
-import com.es.phoneshop.model.сart.Cart;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
