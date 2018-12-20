@@ -1,7 +1,7 @@
 package com.es.phoneshop.logic;
 
-import com.es.phoneshop.model.сart.Cart;
-import com.es.phoneshop.model.сart.CartItem;
+import com.es.phoneshop.model.cart.Cart;
+import com.es.phoneshop.model.cart.CartItem;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -104,6 +104,10 @@ public class CartService {
         } else {
             return true;
         }
+    }
+
+    public void addToCart(HttpSession session, List<String> codes, List<String> quantities) {
+        Cart cart = (Cart) session.getAttribute(CART);
     }
 
     public void deleteCartItem(HttpSession session, Long id) {

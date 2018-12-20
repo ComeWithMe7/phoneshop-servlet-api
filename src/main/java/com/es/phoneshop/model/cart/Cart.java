@@ -1,4 +1,4 @@
-package com.es.phoneshop.model.сart;
+package com.es.phoneshop.model.cart;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -54,6 +54,9 @@
           </tr>
         </c:forEach>
       </table>
+      <form method="get" action="<c:url value="/quickorder"/>">
+        <input type="submit" value="Quick Order"></p>
+      </form>
     </main>
   </body>
 </html>

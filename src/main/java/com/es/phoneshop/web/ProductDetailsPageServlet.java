@@ -10,24 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
-import static com.es.phoneshop.constants.ApplicationConstants.QUANTITY;
-import static com.es.phoneshop.constants.ApplicationConstants.QUANTITY_ANSWER;
-import static com.es.phoneshop.constants.ApplicationConstants.PRODUCT_ID;
-import static com.es.phoneshop.constants.ApplicationConstants.ADWANTAGED_ANSWER;
-
+import static com.es.phoneshop.constants.ApplicationConstants.*;
 
 
 public class ProductDetailsPageServlet extends HttpServlet {
 
     private ProductDao productDao;
     private CartService cartService;
+    private MostViewedProducts mostViewedProducts;
 
     @Override
     public void init(ServletConfig config) {
         productDao = ArrayListProductDao.getInstance();
         cartService = CartService.getInstance();
+        mostViewedProducts = MostViewedProducts.getInstance();
     }
 
     @Override
@@ -37,10 +37,16 @@ public class ProductDetailsPageServlet extends HttpServlet {
         if (!productCode.matches("\\d+$")){
             throw new ProductNotFoundException(productCode);
         }
+        mostViewedProducts.addView(Long.parseLong(productCode));
         Product product = productDao.getProduct(Long.parseLong(productCode));
         req.setAttribute("product", product);
         req.setAttribute(QUANTITY_ANSWER,req.getParameter(QUANTITY_ANSWER));
         req.setAttribute(QUANTITY, req.getParameter(QUANTITY));
+        List<Product> productList = new ArrayList<>(3);
+        for (Long id : mostViewedProducts.getProducts()) {
+            productList.add(productDao.getProduct(id));
+        }
+        req.setAttribute(MOST_VIEWED_PRODUCTS, productList);
         ViewedProducts.setupCiewedProducts(req.getSession(), product);
         req.getRequestDispatcher("/WEB-INF/pages/productDetails.jsp").forward(req, resp);
     }

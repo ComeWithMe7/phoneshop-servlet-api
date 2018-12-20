@@ -22,6 +22,9 @@ public class ApplicationConstants {
     public static final String PHONE_NUMBER = "phone";
     public static final String DELIVERY_ADDRESS = "address";
     public static final String ORDER = "order";
+    public static final String MOST_VIEWED_PRODUCTS = "mostViewedProducts";
+    public static final String MOST_VIEWED_PRODUCTS_VIEWED = "mostViewedProductsViewed";
+
 
 //    public static final String MODE = "mode";
 //    public static final String PAYMENT = "payment";

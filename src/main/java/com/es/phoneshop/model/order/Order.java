@@ -1,6 +1,6 @@
 package com.es.phoneshop.model.order;
 
-import com.es.phoneshop.model.сart.Cart;
+import com.es.phoneshop.model.cart.Cart;
 
 public class Order {
     private String firstName;

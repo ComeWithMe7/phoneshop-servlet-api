@@ -2,7 +2,7 @@ package com.es.phoneshop.web;
 
 
 import com.es.phoneshop.logic.CartService;
-import com.es.phoneshop.model.сart.Cart;
+import com.es.phoneshop.model.cart.Cart;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
